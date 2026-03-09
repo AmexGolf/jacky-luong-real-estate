@@ -1,26 +1,100 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ─── Tailwind v4 Theme — Colors & Fonts ─────────────────────── */
+@theme {
+  /* Brand colors */
+  --color-primary:     #2C2825;
+  --color-secondary:   #F5F0EB;
+  --color-accent:      #B8956A;
+  --color-accent-dark: #8B6F47;
+  --color-text:        #2C2825;
+  --color-text-muted:  #6B6560;
+  --color-text-light:  #F5F0EB;
+  --color-bg:          #FFFCF8;
+  --color-card:        #FAF7F3;
+  --color-border:      #E8E0D8;
+
+  /* Font families — CSS vars injected by next/font in layout.tsx */
+  --font-heading: var(--font-heading);
+  --font-body:    var(--font-body);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ─── Base Styles ────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem; /* offset for fixed header (h-24 = 96px) */
+  font-size: 16px;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #FFFCF8;
+  color: #2C2825;
+  font-family: var(--font-body), system-ui, sans-serif;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+/* ─── Headings ───────────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading), Georgia, serif;
+  color: #2C2825;
+  line-height: 1.2;
+  font-weight: 500;
+}
+
+/* ─── Selection ──────────────────────────────────────────────── */
+::selection {
+  background-color: #B8956A;
+  color: #F5F0EB;
+}
+
+/* ─── Images ─────────────────────────────────────────────────── */
+img {
+  border-radius: 8px;
+}
+
+/* ─── Button transitions ─────────────────────────────────────── */
+button,
+a[role="button"],
+[class*="btn"] {
+  transition: all 0.3s ease;
+}
+
+/* ─── Focus-visible (accessibility) ──────────────────────────── */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #B8956A;
+  outline-offset: 2px;
+}
+
+/* ─── Page load animation ────────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+main {
+  animation: fadeIn 0.6s ease-out both;
+}
+
+/* ─── Screen-reader only utility ─────────────────────────────── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────── */
+::-webkit-scrollbar        { width: 6px; }
+::-webkit-scrollbar-track  { background: #F5F0EB; }
+::-webkit-scrollbar-thumb  { background: #B8956A; border-radius: 3px; }
