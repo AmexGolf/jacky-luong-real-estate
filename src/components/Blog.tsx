@@ -11,6 +11,7 @@ const posts = [
       "The Bay Area luxury market continues to evolve. Here's what buyers and sellers need to know heading into the second half of the year.",
     date: "March 2026",
     readTime: "5 min read",
+    href: "#blog", // Update when this post has its own page
     // Placeholder gradient — replace with: <Image src="/images/blog-market-update.jpg" ... />
     gradient: "linear-gradient(135deg, #E8E0D8 0%, #DDD5CB 50%, #D4C9BC 100%)",
     patternColor: "#B8956A",
@@ -22,6 +23,7 @@ const posts = [
       "Purchasing your first luxury property is exciting but comes with unique considerations. From inspections to negotiations, here's your essential guide.",
     date: "February 2026",
     readTime: "8 min read",
+    href: "#blog", // Update when this post has its own page
     // Placeholder gradient — replace with: <Image src="/images/blog-buyers-guide.jpg" ... />
     gradient: "linear-gradient(135deg, #E0D8D0 0%, #D0C5B8 50%, #C8BAA8 100%)",
     patternColor: "#B8956A",
@@ -33,6 +35,7 @@ const posts = [
       "From world-renowned championship courses to hidden gems with stunning bay views, discover the top golf destinations that make the Bay Area a golfer's paradise.",
     date: "March 2026",
     readTime: "6 min read",
+    href: "/blog/best-golf-courses-san-francisco-bay-area",
     // Placeholder gradient — replace with: <Image src="/images/blog-golf-courses.jpg" ... />
     // Suggested photo: aerial or fairway shot of a Bay Area course (e.g. Harding Park, Pebble Beach)
     gradient: "linear-gradient(135deg, #7A9B68 0%, #A08C48 55%, #C4A84E 100%)",
@@ -106,9 +109,13 @@ function BlogCard({ post, index, inView }: BlogCardProps) {
               {post.readTime}
             </span>
           </div>
-          <span className="font-[family-name:var(--font-body)] text-[11px] tracking-[0.15em] uppercase text-[#B8956A] group-hover:text-[#8B6F47] transition-colors duration-300 font-medium">
+          <a
+            href={post.href}
+            className="font-[family-name:var(--font-body)] text-[11px] tracking-[0.15em] uppercase text-[#B8956A] group-hover:text-[#8B6F47] transition-colors duration-300 font-medium"
+            aria-label={`Read more about ${post.title}`}
+          >
             Read More →
-          </span>
+          </a>
         </div>
       </div>
     </motion.article>
