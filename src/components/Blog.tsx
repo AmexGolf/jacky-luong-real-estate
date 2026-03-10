@@ -11,6 +11,9 @@ const posts = [
       "The Bay Area luxury market continues to evolve. Here's what buyers and sellers need to know heading into the second half of the year.",
     date: "March 2026",
     readTime: "5 min read",
+    // Placeholder gradient — replace with: <Image src="/images/blog-market-update.jpg" ... />
+    gradient: "linear-gradient(135deg, #E8E0D8 0%, #DDD5CB 50%, #D4C9BC 100%)",
+    patternColor: "#B8956A",
   },
   {
     category: "Buyer's Guide",
@@ -19,14 +22,21 @@ const posts = [
       "Purchasing your first luxury property is exciting but comes with unique considerations. From inspections to negotiations, here's your essential guide.",
     date: "February 2026",
     readTime: "8 min read",
+    // Placeholder gradient — replace with: <Image src="/images/blog-buyers-guide.jpg" ... />
+    gradient: "linear-gradient(135deg, #E0D8D0 0%, #D0C5B8 50%, #C8BAA8 100%)",
+    patternColor: "#B8956A",
   },
   {
-    category: "Neighborhood Spotlight",
-    title: "Why Pacific Heights Remains SF's Most Coveted Neighborhood",
+    category: "Lifestyle",
+    title: "The Best Golf Courses in San Francisco & the Bay Area",
     excerpt:
-      "Iconic architecture, sweeping bay views, and an unmatched lifestyle. Discover what makes Pacific Heights the crown jewel of San Francisco real estate.",
-    date: "January 2026",
+      "From world-renowned championship courses to hidden gems with stunning bay views, discover the top golf destinations that make the Bay Area a golfer's paradise.",
+    date: "March 2026",
     readTime: "6 min read",
+    // Placeholder gradient — replace with: <Image src="/images/blog-golf-courses.jpg" ... />
+    // Suggested photo: aerial or fairway shot of a Bay Area course (e.g. Harding Park, Pebble Beach)
+    gradient: "linear-gradient(135deg, #7A9B68 0%, #A08C48 55%, #C4A84E 100%)",
+    patternColor: "#5A7A42",
   },
 ];
 
@@ -35,6 +45,7 @@ interface BlogCardProps {
   index: number;
   inView: boolean;
 }
+
 
 function BlogCard({ post, index, inView }: BlogCardProps) {
   return (
@@ -49,21 +60,17 @@ function BlogCard({ post, index, inView }: BlogCardProps) {
       className="group flex flex-col bg-[#FAF7F3] border border-[#E8E0D8] hover:-translate-y-1.5 hover:shadow-lg transition-all duration-300"
     >
       {/* Placeholder image */}
-      <div className="relative w-full aspect-[16/9] bg-[#EDE8E2] overflow-hidden flex-shrink-0">
+      <div className="relative w-full aspect-[16/9] overflow-hidden flex-shrink-0">
         <div
           className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(135deg, #E8E0D8 0%, #DDD5CB 50%, #D4C9BC 100%)",
-          }}
+          style={{ background: post.gradient }}
           aria-hidden="true"
         />
         {/* Subtle decorative pattern */}
         <div
           className="absolute inset-0 opacity-20"
           style={{
-            backgroundImage:
-              "repeating-linear-gradient(45deg, #B8956A 0px, #B8956A 1px, transparent 0px, transparent 50%)",
+            backgroundImage: `repeating-linear-gradient(45deg, ${post.patternColor} 0px, ${post.patternColor} 1px, transparent 0px, transparent 50%)`,
             backgroundSize: "20px 20px",
           }}
           aria-hidden="true"
