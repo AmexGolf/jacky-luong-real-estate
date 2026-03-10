@@ -5,7 +5,7 @@ import Hero from "@/components/Hero";
 const TrustBar = dynamic(() => import("@/components/TrustBar"));
 const FeaturedProperties = dynamic(() => import("@/components/FeaturedProperties"));
 const About = dynamic(() => import("@/components/About"));
-const Neighborhoods = dynamic(() => import("@/components/Neighborhoods"));
+const Blog = dynamic(() => import("@/components/Blog"));
 const Testimonials = dynamic(() => import("@/components/Testimonials"));
 const Contact = dynamic(() => import("@/components/Contact"));
 
@@ -16,7 +16,7 @@ export default function Home() {
       <TrustBar />
       <FeaturedProperties />
       <About />
-      <Neighborhoods />
+      <Blog />
       <Testimonials />
       <Contact />
     </main>
