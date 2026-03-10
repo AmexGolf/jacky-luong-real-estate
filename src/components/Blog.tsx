@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 
 const posts = [
@@ -36,8 +37,8 @@ const posts = [
     date: "March 2026",
     readTime: "6 min read",
     href: "/blog/best-golf-courses-san-francisco-bay-area",
-    // Placeholder gradient — replace with: <Image src="/images/blog-golf-courses.jpg" ... />
-    // Suggested photo: aerial or fairway shot of a Bay Area course (e.g. Harding Park, Pebble Beach)
+    image: "/images/golf-harding-park.webp",
+    imageAlt: "TPC Harding Park championship fairway along Lake Merced, San Francisco",
     gradient: "linear-gradient(135deg, #7A9B68 0%, #A08C48 55%, #C4A84E 100%)",
     patternColor: "#5A7A42",
   },
@@ -62,22 +63,34 @@ function BlogCard({ post, index, inView }: BlogCardProps) {
       }}
       className="group flex flex-col bg-[#FAF7F3] border border-[#E8E0D8] hover:-translate-y-1.5 hover:shadow-lg transition-all duration-300"
     >
-      {/* Placeholder image */}
+      {/* Card image */}
       <div className="relative w-full aspect-[16/9] overflow-hidden flex-shrink-0">
-        <div
-          className="absolute inset-0"
-          style={{ background: post.gradient }}
-          aria-hidden="true"
-        />
-        {/* Subtle decorative pattern */}
-        <div
-          className="absolute inset-0 opacity-20"
-          style={{
-            backgroundImage: `repeating-linear-gradient(45deg, ${post.patternColor} 0px, ${post.patternColor} 1px, transparent 0px, transparent 50%)`,
-            backgroundSize: "20px 20px",
-          }}
-          aria-hidden="true"
-        />
+        {"image" in post && post.image ? (
+          <Image
+            src={post.image as string}
+            alt={(post as { imageAlt?: string }).imageAlt ?? post.title}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 380px"
+          />
+        ) : (
+          <>
+            <div
+              className="absolute inset-0"
+              style={{ background: post.gradient }}
+              aria-hidden="true"
+            />
+            {/* Subtle decorative pattern */}
+            <div
+              className="absolute inset-0 opacity-20"
+              style={{
+                backgroundImage: `repeating-linear-gradient(45deg, ${post.patternColor} 0px, ${post.patternColor} 1px, transparent 0px, transparent 50%)`,
+                backgroundSize: "20px 20px",
+              }}
+              aria-hidden="true"
+            />
+          </>
+        )}
         {/* Category tag overlaid on image */}
         <div className="absolute top-4 left-4">
           <span className="font-[family-name:var(--font-body)] text-[10px] tracking-[0.25em] uppercase text-[#B8956A] bg-[#FFFCF8]/90 px-3 py-1.5 font-medium">

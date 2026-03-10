@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -22,42 +23,48 @@ const courses = [
     location: "San Francisco",
     tag: "Public · Championship Pedigree",
     body: `Few public courses in America carry the prestige of TPC Harding Park. Nestled along the shores of Lake Merced in the southwestern corner of San Francisco, Harding Park has hosted the PGA Championship, the WGC-Match Play, and Presidents Cup — attracting the world's best players to a course that everyday golfers can book and play. The tree-lined fairways demand accuracy off the tee, while the greens reward patience and touch. The vibe here is unpretentious but serious — you're walking the same ground as Rory McIlroy and Tiger Woods, and the course respects your game in return. Difficulty: Moderate to challenging.`,
-    // Replace with: <Image src="/images/blog-tpc-harding-park.jpg" alt="TPC Harding Park, San Francisco" fill className="object-cover" />
+    image: "/images/golf-harding-park.webp",
+    imageAlt: "TPC Harding Park championship fairway along Lake Merced, San Francisco",
   },
   {
     name: "The Olympic Club",
     location: "San Francisco",
     tag: "Private · Historic",
     body: `One of the most storied private clubs in American golf, The Olympic Club's Lake Course has hosted six U.S. Opens — more than any other course in California. Set among towering eucalyptus and cypress trees just minutes from the Pacific Ocean, the course plays longer than its yardage suggests, with narrow fairways that punish wayward shots and small, undulating greens that test even the sharpest short games. Membership here is among the most coveted in the Bay Area, and the club's history is unmatched. For those fortunate enough to play it, the experience is unforgettable. Difficulty: Challenging.`,
-    // Replace with: <Image src="/images/blog-olympic-club.jpg" alt="The Olympic Club Lake Course, San Francisco" fill className="object-cover" />
+    image: "/images/golf-olympic-club.jpg",
+    imageAlt: "The Olympic Club Lake Course, San Francisco",
   },
   {
     name: "Presidio Golf Course",
     location: "San Francisco",
     tag: "Public · Scenic",
     body: `Tucked inside the breathtaking Presidio National Park, Presidio Golf Course is one of the most beautiful — and most accessible — courses in the city. Dating back to 1895, this historic course winds through a forest of Monterey cypress and pine, with the Golden Gate Bridge peeking through the trees on clear days. The atmosphere is relaxed and welcoming, making it a favorite for both serious golfers and those looking for a scenic afternoon round. It's a rare gem: a historic, well-maintained course in a national park, open to the public at reasonable rates. Difficulty: Moderate.`,
-    // Replace with: <Image src="/images/blog-presidio-golf.jpg" alt="Presidio Golf Course with Golden Gate Bridge views" fill className="object-cover" />
+    image: "/images/golf-presido.jpeg",
+    imageAlt: "Presidio Golf Course with Golden Gate Bridge views, San Francisco",
   },
   {
     name: "Crystal Springs Golf Course",
     location: "Burlingame",
     tag: "Public · Peninsula Views",
     body: `Located in Burlingame on the San Francisco Peninsula, Crystal Springs Golf Course offers some of the most dramatic scenery in Bay Area golf. The course overlooks the stunning Crystal Springs Reservoir — a protected watershed surrounded by rolling hills — with views that stretch for miles on a clear day. The layout is thoughtfully designed with varied elevation changes and interesting risk-reward holes that keep every round engaging. It's a well-kept secret among Peninsula locals, offering a quality golf experience without the crowds or price tag of more famous destinations. Difficulty: Moderate.`,
-    // Replace with: <Image src="/images/blog-crystal-springs.jpg" alt="Crystal Springs Golf Course overlooking the reservoir" fill className="object-cover" />
+    image: "/images/golf-crystal-springs.jpeg",
+    imageAlt: "Crystal Springs Golf Course overlooking the reservoir, Burlingame",
   },
   {
     name: "Half Moon Bay Golf Links",
     location: "Half Moon Bay",
     tag: "Public · Oceanfront",
     body: `Often called the "Pebble Beach of the Bay Area," Half Moon Bay Golf Links sits on the rugged Pacific coastline just 30 miles south of San Francisco. The resort features two championship courses — the Old Course and the Ocean Course — both offering dramatic cliffside holes with waves crashing below. The Ocean Course's par-3 finishing hole, perched directly above the Pacific, is one of the most photographed holes in California golf. Wind is always a factor here, making club selection an adventure. Stay for the weekend at the Ritz-Carlton Half Moon Bay for the full experience. Difficulty: Moderate to challenging.`,
-    // Replace with: <Image src="/images/blog-half-moon-bay.jpg" alt="Half Moon Bay Golf Links oceanfront hole" fill className="object-cover" />
+    image: "/images/golf-half-moon-bay.jpg",
+    imageAlt: "Half Moon Bay Golf Links oceanfront hole along the Pacific coast",
   },
   {
     name: "Pasatiempo Golf Club",
     location: "Santa Cruz",
     tag: "Semi-Private · Top-Ranked",
     body: `Designed by the legendary Alister MacKenzie — the same architect behind Augusta National and Cypress Point — Pasatiempo Golf Club in Santa Cruz is consistently ranked among the top public-access courses in the United States. The course dates to 1929 and retains MacKenzie's signature design philosophy: dramatic natural contours, deceptive greens, and holes that are equally beautiful and brutally challenging. Deep ravines, undulating fairways, and some of the most complex green complexes on the West Coast make every round a strategic puzzle. For serious golfers, a trip to Pasatiempo is a pilgrimage. Difficulty: Challenging.`,
-    // Replace with: <Image src="/images/blog-pasatiempo.jpg" alt="Pasatiempo Golf Club, Santa Cruz — designed by Alister MacKenzie" fill className="object-cover" />
+    image: "/images/golf-pasatiemp.jpg",
+    imageAlt: "Pasatiempo Golf Club, Santa Cruz — designed by Alister MacKenzie",
   },
 ];
 
@@ -108,31 +115,15 @@ export default function GolfCoursesPost() {
             </span>
           </div>
 
-          {/* Hero image placeholder */}
-          {/* Replace this div with: <Image src="/images/blog-golf-hero.jpg" alt="Golf course in the San Francisco Bay Area" width={1200} height={630} className="w-full object-cover" priority /> */}
-          <div
-            className="w-full aspect-[16/7] relative overflow-hidden"
-            aria-label="Golf course hero image"
-          >
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(135deg, #7A9B68 0%, #A08C48 40%, #C4A84E 70%, #D4BC6A 100%)",
-              }}
-              aria-hidden="true"
+          <div className="w-full aspect-[16/7] relative overflow-hidden">
+            <Image
+              src="/images/golf-harding-park.webp"
+              alt="Golf course in the San Francisco Bay Area"
+              fill
+              className="object-cover"
+              priority
+              sizes="(max-width: 768px) 100vw, 720px"
             />
-            <div
-              className="absolute inset-0 opacity-15"
-              style={{
-                backgroundImage:
-                  "repeating-linear-gradient(45deg, #5A7A42 0px, #5A7A42 1px, transparent 0px, transparent 50%)",
-                backgroundSize: "24px 24px",
-              }}
-              aria-hidden="true"
-            />
-            {/* Decorative horizon line */}
-            <div className="absolute bottom-1/3 inset-x-0 h-px bg-white/10" aria-hidden="true" />
           </div>
         </header>
 
@@ -157,23 +148,15 @@ export default function GolfCoursesPost() {
           {courses.map((course, i) => (
             <section key={course.name} className={i < courses.length - 1 ? "mb-14" : "mb-10"}>
 
-              {/* Course image placeholder */}
-              {/* {course comment shows file to drop in} */}
-              <div className="w-full aspect-[16/9] mb-6 relative overflow-hidden bg-[#EDE8E2]">
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    background: `linear-gradient(135deg, #${
-                      ["8B9B7A","7A8B6E","6B8A5E","8B9A7E","7B9068","6A8058"][i]
-                    } 0%, #A09060 60%, #C4A84E 100%)`,
-                  }}
-                  aria-hidden="true"
+              {/* Course image */}
+              <div className="w-full aspect-[16/9] mb-6 relative overflow-hidden">
+                <Image
+                  src={course.image}
+                  alt={course.imageAlt}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 720px"
                 />
-                <div className="absolute inset-0 flex items-end p-4" aria-hidden="true">
-                  <span className="font-[family-name:var(--font-body)] text-[10px] tracking-[0.2em] uppercase text-white/40">
-                    Photo coming soon
-                  </span>
-                </div>
               </div>
 
               {/* Course name */}
