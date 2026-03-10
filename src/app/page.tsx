@@ -15,9 +15,9 @@ export default function Home() {
       <Hero />
       <TrustBar />
       <FeaturedProperties />
-      <Testimonials />
       <Blog />
       <About />
+      <Testimonials />
       <Contact />
     </main>
   );
