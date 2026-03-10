@@ -4,11 +4,12 @@ import { useEffect, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
-  { label: "Home", href: "#home" },
-  { label: "Properties", href: "#properties" },
-  { label: "About", href: "#about" },
-  { label: "Blog", href: "#blog" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home",         href: "#home" },
+  { label: "Properties",  href: "#properties" },
+  { label: "Testimonials", href: "#testimonials" },
+  { label: "Blog",        href: "#blog" },
+  { label: "About",       href: "#about" },
+  { label: "Contact",     href: "#contact" },
 ];
 
 export default function Header() {
