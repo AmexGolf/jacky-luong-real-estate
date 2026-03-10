@@ -6,30 +6,6 @@ import { motion, useInView } from "framer-motion";
 
 const posts = [
   {
-    category: "Market Update",
-    title: "SF Bay Area Luxury Market: What to Expect in 2026",
-    excerpt:
-      "The Bay Area luxury market continues to evolve. Here's what buyers and sellers need to know heading into the second half of the year.",
-    date: "March 2026",
-    readTime: "5 min read",
-    href: "#blog", // Update when this post has its own page
-    // Placeholder gradient — replace with: <Image src="/images/blog-market-update.jpg" ... />
-    gradient: "linear-gradient(135deg, #E8E0D8 0%, #DDD5CB 50%, #D4C9BC 100%)",
-    patternColor: "#B8956A",
-  },
-  {
-    category: "Buyer's Guide",
-    title: "First-Time Luxury Home Buyer? 7 Things You Need to Know",
-    excerpt:
-      "Purchasing your first luxury property is exciting but comes with unique considerations. From inspections to negotiations, here's your essential guide.",
-    date: "February 2026",
-    readTime: "8 min read",
-    href: "#blog", // Update when this post has its own page
-    // Placeholder gradient — replace with: <Image src="/images/blog-buyers-guide.jpg" ... />
-    gradient: "linear-gradient(135deg, #E0D8D0 0%, #D0C5B8 50%, #C8BAA8 100%)",
-    patternColor: "#B8956A",
-  },
-  {
     category: "Lifestyle",
     title: "The Best Golf Courses in San Francisco & the Bay Area",
     excerpt:
@@ -42,6 +18,7 @@ const posts = [
     gradient: "linear-gradient(135deg, #7A9B68 0%, #A08C48 55%, #C4A84E 100%)",
     patternColor: "#5A7A42",
   },
+  // Add new posts here — the grid expands automatically
 ];
 
 interface BlogCardProps {
@@ -167,7 +144,15 @@ export default function Blog() {
         </motion.div>
 
         {/* ── Cards grid ───────────────────────────────────────────── */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        {/* Single card: centered at card-column width. 2+ posts: auto-expands to full grid. */}
+        <div
+          className={[
+            "grid gap-6 mb-12",
+            posts.length === 1
+              ? "grid-cols-1 max-w-sm mx-auto w-full"
+              : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
+          ].join(" ")}
+        >
           {posts.map((post, i) => (
             <BlogCard key={post.title} post={post} index={i} inView={inView} />
           ))}
