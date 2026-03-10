@@ -4,12 +4,12 @@ import { useEffect, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
-  { label: "Home",         href: "#home" },
-  { label: "Properties",  href: "#properties" },
-  { label: "Blog",        href: "#blog" },
-  { label: "About",       href: "#about" },
-  { label: "Testimonials", href: "#testimonials" },
-  { label: "Contact",     href: "#contact" },
+  { label: "Home",         href: "/" },
+  { label: "Properties",  href: "/#properties" },
+  { label: "Blog",        href: "/#blog" },
+  { label: "About",       href: "/#about" },
+  { label: "Testimonials", href: "/#testimonials" },
+  { label: "Contact",     href: "/#contact" },
 ];
 
 export default function Header() {
@@ -58,7 +58,7 @@ export default function Header() {
         <div className="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-20 lg:h-24">
           {/* ── Brand ── */}
           <a
-            href="#home"
+            href="/"
             className="flex flex-col leading-none group"
             aria-label="Jacky Luong Real Estate — Home"
           >
@@ -122,7 +122,7 @@ export default function Header() {
 
             {/* CTA Button */}
             <a
-              href="#contact"
+              href="/#contact"
               className={[
                 "font-[family-name:var(--font-body)] text-[11px] tracking-[0.15em] uppercase font-medium",
                 "px-6 py-3 border transition-all duration-300",
@@ -255,7 +255,7 @@ export default function Header() {
                   415.572.1220
                 </a>
                 <a
-                  href="#contact"
+                  href="/#contact"
                   onClick={handleMobileLinkClick}
                   className={[
                     "font-[family-name:var(--font-body)] text-[11px] tracking-[0.15em] uppercase font-medium",
