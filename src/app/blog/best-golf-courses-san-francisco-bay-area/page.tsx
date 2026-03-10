@@ -24,7 +24,7 @@ const courses = [
     tag: "Public · Championship Pedigree",
     body: `Few public courses in America carry the prestige of TPC Harding Park. Nestled along the shores of Lake Merced in the southwestern corner of San Francisco, Harding Park has hosted the PGA Championship, the WGC-Match Play, and Presidents Cup — attracting the world's best players to a course that everyday golfers can book and play. The tree-lined fairways demand accuracy off the tee, while the greens reward patience and touch. The vibe here is unpretentious but serious — you're walking the same ground as Rory McIlroy and Tiger Woods, and the course respects your game in return. Difficulty: Moderate to challenging.`,
     image: "/images/golf-harding-park.webp",
-    imageAlt: "TPC Harding Park championship fairway along Lake Merced, San Francisco",
+    imageAlt: "TPC Harding Park tree-lined fairway along Lake Merced, San Francisco — host of the PGA Championship",
   },
   {
     name: "The Olympic Club",
@@ -32,23 +32,23 @@ const courses = [
     tag: "Private · Historic",
     body: `One of the most storied private clubs in American golf, The Olympic Club's Lake Course has hosted six U.S. Opens — more than any other course in California. Set among towering eucalyptus and cypress trees just minutes from the Pacific Ocean, the course plays longer than its yardage suggests, with narrow fairways that punish wayward shots and small, undulating greens that test even the sharpest short games. Membership here is among the most coveted in the Bay Area, and the club's history is unmatched. For those fortunate enough to play it, the experience is unforgettable. Difficulty: Challenging.`,
     image: "/images/golf-olympic-club.jpg",
-    imageAlt: "The Olympic Club Lake Course, San Francisco",
+    imageAlt: "The Olympic Club Lake Course lined with eucalyptus and cypress trees, San Francisco — six-time U.S. Open host",
   },
   {
     name: "Presidio Golf Course",
     location: "San Francisco",
     tag: "Public · Scenic",
     body: `Tucked inside the breathtaking Presidio National Park, Presidio Golf Course is one of the most beautiful — and most accessible — courses in the city. Dating back to 1895, this historic course winds through a forest of Monterey cypress and pine, with the Golden Gate Bridge peeking through the trees on clear days. The atmosphere is relaxed and welcoming, making it a favorite for both serious golfers and those looking for a scenic afternoon round. It's a rare gem: a historic, well-maintained course in a national park, open to the public at reasonable rates. Difficulty: Moderate.`,
-    image: "/images/golf-presido.jpeg",
-    imageAlt: "Presidio Golf Course with Golden Gate Bridge views, San Francisco",
+    image: "/images/golf-presido.webp",
+    imageAlt: "Presidio Golf Course fairway through Monterey cypress trees with Golden Gate Bridge views, San Francisco",
   },
   {
     name: "Crystal Springs Golf Course",
     location: "Burlingame",
     tag: "Public · Peninsula Views",
     body: `Located in Burlingame on the San Francisco Peninsula, Crystal Springs Golf Course offers some of the most dramatic scenery in Bay Area golf. The course overlooks the stunning Crystal Springs Reservoir — a protected watershed surrounded by rolling hills — with views that stretch for miles on a clear day. The layout is thoughtfully designed with varied elevation changes and interesting risk-reward holes that keep every round engaging. It's a well-kept secret among Peninsula locals, offering a quality golf experience without the crowds or price tag of more famous destinations. Difficulty: Moderate.`,
-    image: "/images/golf-crystal-springs.jpeg",
-    imageAlt: "Crystal Springs Golf Course overlooking the reservoir, Burlingame",
+    image: "/images/goldf-crystal-springs.jpg",
+    imageAlt: "Crystal Springs Golf Course with panoramic views of Crystal Springs Reservoir, Burlingame",
   },
   {
     name: "Half Moon Bay Golf Links",
@@ -56,7 +56,7 @@ const courses = [
     tag: "Public · Oceanfront",
     body: `Often called the "Pebble Beach of the Bay Area," Half Moon Bay Golf Links sits on the rugged Pacific coastline just 30 miles south of San Francisco. The resort features two championship courses — the Old Course and the Ocean Course — both offering dramatic cliffside holes with waves crashing below. The Ocean Course's par-3 finishing hole, perched directly above the Pacific, is one of the most photographed holes in California golf. Wind is always a factor here, making club selection an adventure. Stay for the weekend at the Ritz-Carlton Half Moon Bay for the full experience. Difficulty: Moderate to challenging.`,
     image: "/images/golf-half-moon-bay.jpg",
-    imageAlt: "Half Moon Bay Golf Links oceanfront hole along the Pacific coast",
+    imageAlt: "Half Moon Bay Golf Links cliffside hole perched above the Pacific Ocean, Half Moon Bay",
   },
   {
     name: "Pasatiempo Golf Club",
@@ -64,7 +64,7 @@ const courses = [
     tag: "Semi-Private · Top-Ranked",
     body: `Designed by the legendary Alister MacKenzie — the same architect behind Augusta National and Cypress Point — Pasatiempo Golf Club in Santa Cruz is consistently ranked among the top public-access courses in the United States. The course dates to 1929 and retains MacKenzie's signature design philosophy: dramatic natural contours, deceptive greens, and holes that are equally beautiful and brutally challenging. Deep ravines, undulating fairways, and some of the most complex green complexes on the West Coast make every round a strategic puzzle. For serious golfers, a trip to Pasatiempo is a pilgrimage. Difficulty: Challenging.`,
     image: "/images/golf-pasatiemp.jpg",
-    imageAlt: "Pasatiempo Golf Club, Santa Cruz — designed by Alister MacKenzie",
+    imageAlt: "Pasatiempo Golf Club dramatic fairway with natural ravines, Santa Cruz — designed by Alister MacKenzie",
   },
 ];
 
@@ -117,8 +117,8 @@ export default function GolfCoursesPost() {
 
           <div className="w-full aspect-[16/7] relative overflow-hidden">
             <Image
-              src="/images/golf-harding-park.webp"
-              alt="Golf course in the San Francisco Bay Area"
+              src="/images/golf-hero.jpg"
+              alt="Aerial view of a championship golf course in the San Francisco Bay Area"
               fill
               className="object-cover"
               priority
