@@ -954,11 +954,33 @@ export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState("site");
   const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [deployState, setDeployState] = useState<"idle" | "deploying" | "done" | "error">("idle");
+  const deployTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   function showToast(message: string, type: "success" | "error") {
     setToast({ message, type });
     if (toastTimer.current) clearTimeout(toastTimer.current);
     toastTimer.current = setTimeout(() => setToast(null), 3500);
+  }
+
+  async function handleDeploy() {
+    setDeployState("deploying");
+    try {
+      const res = await fetch("/api/admin/deploy", { method: "POST" });
+      const data = await res.json();
+      if (res.ok) {
+        setDeployState("done");
+        showToast(data.message || "Published successfully!", "success");
+      } else {
+        setDeployState("error");
+        showToast(data.error || "Deploy failed.", "error");
+      }
+    } catch {
+      setDeployState("error");
+      showToast("Deploy failed — check your connection.", "error");
+    }
+    if (deployTimer.current) clearTimeout(deployTimer.current);
+    deployTimer.current = setTimeout(() => setDeployState("idle"), 5000);
   }
 
   async function handleLogout() {
@@ -1013,6 +1035,27 @@ export default function AdminDashboard() {
 
         {/* Footer */}
         <div className="p-4 border-t space-y-2" style={{ borderColor: "#2C2420" }}>
+
+          {/* Publish button */}
+          <button
+            onClick={handleDeploy}
+            disabled={deployState === "deploying"}
+            className="flex items-center gap-2 px-3 py-2.5 w-full text-left transition-all duration-150 border"
+            style={{
+              borderColor: deployState === "done" ? "#22C55E" : "#B8956A",
+              background: deployState === "done" ? "#14532D22" : "#B8956A18",
+              color: deployState === "done" ? "#22C55E" : deployState === "error" ? "#EF4444" : "#B8956A",
+              opacity: deployState === "deploying" ? 0.7 : 1,
+            }}
+          >
+            <span style={{ fontSize: 13 }}>
+              {deployState === "deploying" ? "⟳" : deployState === "done" ? "✓" : deployState === "error" ? "✕" : "↑"}
+            </span>
+            <span className="font-[family-name:var(--font-body)] text-xs font-medium">
+              {deployState === "deploying" ? "Publishing..." : deployState === "done" ? "Published!" : deployState === "error" ? "Failed" : "Publish to Live Site"}
+            </span>
+          </button>
+
           <a
             href="/"
             target="_blank"
