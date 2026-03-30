@@ -1,10 +1,6 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Outfit } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import BackToTop from "@/components/BackToTop";
-import JsonLd from "@/components/JsonLd";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-heading",
@@ -94,17 +90,7 @@ export default function RootLayout({
       <body
         className={`${cormorant.variable} ${outfit.variable} antialiased`}
       >
-        <JsonLd />
-        <a
-          href="#home"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-[#B8956A] focus:text-white focus:text-sm"
-        >
-          Skip to main content
-        </a>
-        <Header />
         {children}
-        <Footer />
-        <BackToTop />
       </body>
     </html>
   );
