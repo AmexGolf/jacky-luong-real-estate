@@ -138,6 +138,12 @@ export default function LandingPage() {
       });
       if (res.ok) {
         setSubmitted(true);
+        // Fire Facebook Lead event
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        if (typeof window !== "undefined" && (window as any).fbq) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (window as any).fbq("track", "Lead");
+        }
       } else {
         const data = await res.json();
         setError(data.error || "Something went wrong. Please try again.");
