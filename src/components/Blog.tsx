@@ -3,23 +3,9 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
+import blogData from "@/data/blog-posts.json";
 
-const posts = [
-  {
-    category: "Lifestyle",
-    title: "The Best Golf Courses in San Francisco & the Bay Area",
-    excerpt:
-      "From world-renowned championship courses to hidden gems with stunning bay views, discover the top golf destinations that make the Bay Area a golfer's paradise.",
-    date: "March 2026",
-    readTime: "6 min read",
-    href: "/blog/best-golf-courses-san-francisco-bay-area",
-    image: "/images/golf-harding-park.webp",
-    imageAlt: "TPC Harding Park championship fairway along Lake Merced, San Francisco",
-    gradient: "linear-gradient(135deg, #7A9B68 0%, #A08C48 55%, #C4A84E 100%)",
-    patternColor: "#5A7A42",
-  },
-  // Add new posts here — the grid expands automatically
-];
+const posts = blogData.map((p) => ({ ...p, href: `/blog/${p.slug}` }));
 
 interface BlogCardProps {
   post: (typeof posts)[number];

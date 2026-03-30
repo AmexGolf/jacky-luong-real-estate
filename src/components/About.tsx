@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
+import aboutData from "@/data/about.json";
 
 const contactItems = [
   {
@@ -63,8 +64,8 @@ export default function About() {
                 style={{ aspectRatio: "3 / 4" }}
               >
                 <Image
-                src="/images/Headshot.png"
-                alt="Jacky Luong, San Francisco Bay Area Real Estate Agent"
+                src={aboutData.photo}
+                alt={`${aboutData.name}, San Francisco Bay Area Real Estate Agent`}
                 fill
                 sizes="(max-width: 768px) 100vw, 40vw"
                 className="object-cover object-top"
@@ -97,12 +98,12 @@ export default function About() {
               className="font-[family-name:var(--font-heading)] text-4xl md:text-5xl font-normal mb-2 leading-tight"
               style={{ color: "#2C2825" }}
             >
-              Jacky Luong
+              {aboutData.name}
             </h2>
 
             {/* Subtitle */}
             <p className="font-[family-name:var(--font-body)] text-[#B8956A] text-xs tracking-[0.18em] uppercase font-light mb-8">
-              Real Estate Specialist · SF Bay Area
+              {aboutData.subtitle}
             </p>
 
             {/* Divider */}
@@ -110,38 +111,11 @@ export default function About() {
 
             {/* Bio */}
             <div className="space-y-5 mb-10">
-              <p className="font-[family-name:var(--font-body)] text-[#6B6560] text-sm leading-relaxed">
-                Born and raised in San Francisco, Jacky Luong brings a lifelong connection to
-                the city and its surrounding communities. With deep local roots and an
-                entrepreneurial mindset, Jacky is passionate about helping others navigate the
-                often complex world of real estate.
-              </p>
-              <p className="font-[family-name:var(--font-body)] text-[#6B6560] text-sm leading-relaxed">
-                Jacky enters the real estate space with a strong foundation in client service,
-                problem-solving, and strategic planning — skills honed over nearly a decade as
-                a coach at Equinox and through his academic background in Exercise Science. He
-                understands how to identify key needs, create personalized plans, and deliver
-                results, all while maintaining clear and open communication. He believes that
-                every successful client relationship begins with listening and ends with a
-                shared sense of achievement.
-              </p>
-              <p className="font-[family-name:var(--font-body)] text-[#6B6560] text-sm leading-relaxed">
-                Jacky&apos;s first brush with real estate came at home — watching his parents
-                negotiate and renovate their family home ignited a natural curiosity that grew
-                into a professional calling. Today, he channels that curiosity into a career
-                driven by purpose, integrity, and a desire to exceed expectations.
-              </p>
-              <p className="font-[family-name:var(--font-body)] text-[#6B6560] text-sm leading-relaxed">
-                Whether guiding first-time buyers to their dream home or working with investors
-                to explore new opportunities, Jacky is committed to transparency, hard work,
-                and doing right by his clients. His love for photography and design gives him
-                an eye for visual storytelling, and his obsession with golf reflects the same
-                focus and discipline he brings to every transaction.
-              </p>
-              <p className="font-[family-name:var(--font-body)] text-[#6B6560] text-sm leading-relaxed">
-                With Jacky, clients can expect honest guidance, strategic solutions, and a
-                partner who&apos;s always one step ahead.
-              </p>
+              {aboutData.bio.map((paragraph, i) => (
+                <p key={i} className="font-[family-name:var(--font-body)] text-[#6B6560] text-sm leading-relaxed">
+                  {paragraph}
+                </p>
+              ))}
             </div>
 
             {/* Contact info */}

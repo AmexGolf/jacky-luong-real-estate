@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import heroData from "@/data/hero.json";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 28 },
@@ -91,7 +92,7 @@ export default function Hero() {
           custom={0.25}
           className="font-[family-name:var(--font-body)] text-[10px] md:text-[11px] tracking-[0.4em] uppercase text-[#B8956A] mb-6 font-light"
         >
-          San Francisco Bay Area Real Estate
+          {heroData.preHeadline}
         </motion.p>
 
         {/* Main headline */}
@@ -106,10 +107,10 @@ export default function Hero() {
             textShadow: "0 2px 24px rgba(0,0,0,0.4)",
           }}
         >
-          Coaching You to Your
+          {heroData.headline1}
           <br />
           <em className="font-light" style={{ fontStyle: "italic" }}>
-            Future Home
+            {heroData.headline2}
           </em>
         </motion.h1>
 
@@ -131,8 +132,7 @@ export default function Hero() {
           custom={0.62}
           className="font-[family-name:var(--font-body)] text-[#F5F0EB]/60 text-sm md:text-base font-light leading-relaxed max-w-xl mb-10"
         >
-          Personalized guidance for discerning buyers and sellers across the San
-          Francisco Bay Area&apos;s most coveted neighborhoods
+          {heroData.subheadline}
         </motion.p>
 
         {/* CTA Buttons */}
@@ -147,13 +147,13 @@ export default function Hero() {
             href="#properties"
             className="font-[family-name:var(--font-body)] text-[11px] tracking-[0.18em] uppercase font-medium px-8 py-4 bg-[#B8956A] text-[#FFFCF8] hover:bg-[#8B6F47] transition-all duration-300 min-w-[200px] text-center"
           >
-            Explore Properties
+            {heroData.cta1}
           </a>
           <a
             href="#contact"
             className="font-[family-name:var(--font-body)] text-[11px] tracking-[0.18em] uppercase font-medium px-8 py-4 border border-[#F5F0EB]/40 text-[#F5F0EB] hover:border-[#F5F0EB] hover:bg-[#F5F0EB]/5 transition-all duration-300 min-w-[200px] text-center"
           >
-            Schedule a Consultation
+            {heroData.cta2}
           </a>
         </motion.div>
       </motion.div>

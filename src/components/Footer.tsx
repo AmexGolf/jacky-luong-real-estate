@@ -1,3 +1,5 @@
+import siteData from "@/data/site.json";
+
 const quickLinks = [
   { label: "Properties", href: "#properties" },
   { label: "About", href: "#about" },
@@ -9,7 +11,7 @@ const quickLinks = [
 const socials = [
   {
     label: "Instagram",
-    href: "#",
+    href: siteData.social.instagram,
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
         <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" strokeWidth="1.5"/>
@@ -20,7 +22,7 @@ const socials = [
   },
   {
     label: "LinkedIn",
-    href: "#",
+    href: siteData.social.linkedin,
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
         <rect x="2" y="2" width="20" height="20" rx="3" stroke="currentColor" strokeWidth="1.5"/>
@@ -31,7 +33,7 @@ const socials = [
   },
   {
     label: "Facebook",
-    href: "#",
+    href: siteData.social.facebook,
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
         <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" strokeWidth="1.5"/>
@@ -55,16 +57,16 @@ export default function Footer() {
               className="font-[family-name:var(--font-heading)] text-xl tracking-[0.15em] uppercase font-semibold mb-1"
               style={{ fontVariant: "small-caps", color: "#F5F0EB" }}
             >
-              Jacky Luong
+              {siteData.name}
             </p>
             <p className="font-[family-name:var(--font-body)] text-[9px] tracking-[0.3em] uppercase text-[#B8956A] font-light mb-5">
               Real Estate
             </p>
             <p className="font-[family-name:var(--font-heading)] text-sm italic text-[#F5F0EB]/50 mb-4 leading-relaxed">
-              Coaching You to Your Future Home
+              {siteData.tagline}
             </p>
             <p className="font-[family-name:var(--font-body)] text-[10px] tracking-[0.2em] uppercase text-[#F5F0EB]/30">
-              DRE #02254871
+              DRE #{siteData.dre}
             </p>
           </div>
 
@@ -93,19 +95,19 @@ export default function Footer() {
             </p>
             <div className="flex flex-col gap-3 mb-6">
               <a
-                href="tel:4155721220"
+                href={siteData.phoneHref}
                 className="font-[family-name:var(--font-body)] text-sm text-[#F5F0EB]/60 hover:text-[#F5F0EB] transition-colors duration-200"
               >
-                415.572.1220
+                {siteData.phone}
               </a>
               <a
-                href="mailto:jacky@kineticrealestate.com"
+                href={`mailto:${siteData.email}`}
                 className="font-[family-name:var(--font-body)] text-sm text-[#F5F0EB]/60 hover:text-[#F5F0EB] transition-colors duration-200"
               >
-                jacky@kineticrealestate.com
+                {siteData.email}
               </a>
               <p className="font-[family-name:var(--font-body)] text-sm text-[#F5F0EB]/40">
-                San Francisco Bay Area, CA
+                {siteData.location}
               </p>
             </div>
 
@@ -129,7 +131,7 @@ export default function Footer() {
         <div className="border-t border-[#B8956A]/25 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex flex-col md:flex-row items-center gap-1.5 md:gap-4">
             <p className="font-[family-name:var(--font-body)] text-[10px] text-[#F5F0EB]/30 tracking-wide">
-              &copy; 2026 Jacky Luong | Kinetic Real Estate. All rights reserved.
+              &copy; {new Date().getFullYear()} {siteData.name} | {siteData.company}. All rights reserved.
             </p>
             <span className="hidden md:inline text-[#F5F0EB]/15">|</span>
             <p className="font-[family-name:var(--font-body)] text-[10px] text-[#F5F0EB]/30 tracking-wide">

@@ -3,33 +3,17 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
+import propertiesData from "@/data/properties.json";
 
-const properties = [
-  {
-    price: "$1,100,000",
-    location: "San Francisco",
-    tag: "Sold",
-    tagStyle: "bg-[#2C2825] text-[#B8956A]",
-    image: "/images/Property1.webp",
-    imageAlt: "Sold home in San Francisco for $1,100,000",
-  },
-  {
-    price: "$940,000",
-    location: "Daly City",
-    tag: "Sold — $60K Over Asking",
-    tagStyle: "bg-[#B8956A] text-[#2C2825]",
-    image: "/images/property2.jpeg",
-    imageAlt: "Sold home in Daly City for $940,000 — $60K over asking price",
-  },
-  {
-    price: "$422,000",
-    location: "San Francisco",
-    tag: "In Contract",
-    tagStyle: "bg-[#8B6F47] text-[#F5F0EB]",
-    image: "/images/Property3.jpg",
-    imageAlt: "Property in contract in San Francisco at $422,000",
-  },
-];
+const STATUS_STYLES: Record<string, { bg: string; color: string }> = {
+  "sold":        { bg: "#2C2825", color: "#B8956A" },
+  "sold-over":   { bg: "#B8956A", color: "#2C2825" },
+  "in-contract": { bg: "#8B6F47", color: "#F5F0EB" },
+  "active":      { bg: "#15803D", color: "#FFFFFF" },
+  "pending":     { bg: "#6B7280", color: "#FFFFFF" },
+};
+
+const properties = propertiesData;
 
 export default function FeaturedProperties() {
   const ref = useRef(null);
@@ -104,14 +88,13 @@ export default function FeaturedProperties() {
 
                   {/* Tag badge */}
                   <span
-                    className={[
-                      "absolute top-4 left-4 z-10",
-                      "font-[family-name:var(--font-body)] text-[9px] tracking-[0.18em] uppercase font-medium",
-                      "px-3 py-1.5",
-                      property.tagStyle,
-                    ].join(" ")}
+                    className="absolute top-4 left-4 z-10 font-[family-name:var(--font-body)] text-[9px] tracking-[0.18em] uppercase font-medium px-3 py-1.5"
+                    style={{
+                      background: (STATUS_STYLES[property.status] || STATUS_STYLES["sold"]).bg,
+                      color: (STATUS_STYLES[property.status] || STATUS_STYLES["sold"]).color,
+                    }}
                   >
-                    {property.tag}
+                    {property.statusLabel}
                   </span>
                 </div>
 

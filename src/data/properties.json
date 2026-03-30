@@ -1,0 +1,29 @@
+[
+  {
+    "id": "1",
+    "price": "$1,100,000",
+    "location": "San Francisco",
+    "status": "sold",
+    "statusLabel": "Sold",
+    "image": "/images/Property1.webp",
+    "imageAlt": "Sold home in San Francisco for $1,100,000"
+  },
+  {
+    "id": "2",
+    "price": "$940,000",
+    "location": "Daly City",
+    "status": "sold-over",
+    "statusLabel": "Sold — $60K Over Asking",
+    "image": "/images/property2.jpeg",
+    "imageAlt": "Sold home in Daly City for $940,000 — $60K over asking price"
+  },
+  {
+    "id": "3",
+    "price": "$422,000",
+    "location": "San Francisco",
+    "status": "in-contract",
+    "statusLabel": "In Contract",
+    "image": "/images/Property3.jpg",
+    "imageAlt": "Property in contract in San Francisco at $422,000"
+  }
+]
