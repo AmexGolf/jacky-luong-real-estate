@@ -13,6 +13,8 @@ interface BlogSection {
   heading: string;
   body: string;
   tip?: string;
+  photoQuery?: string; // Claude provides this per section
+  photo?: string;      // filled in after Pexels download
 }
 
 interface GeneratedBlog {
@@ -25,7 +27,7 @@ interface GeneratedBlog {
   intro: string;
   sections: BlogSection[];
   conclusion: string;
-  photoQuery: string;
+  photoQuery: string; // hero image query
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -58,10 +60,9 @@ async function fetchPexelsPhoto(query: string, apiKey: string): Promise<string |
   }
 }
 
-async function downloadPhoto(imageUrl: string, slug: string): Promise<string> {
+async function downloadPhoto(imageUrl: string, fileName: string): Promise<string> {
   const dir = path.join(CWD, "public", "images", "blog");
   await fs.mkdir(dir, { recursive: true });
-  const fileName = `${slug}-hero.jpg`;
   const filePath = path.join(dir, fileName);
 
   const res = await fetch(imageUrl);
@@ -78,9 +79,12 @@ function generatePageFile(blog: GeneratedBlog, heroImage: string): string {
 
   const sectionsCode = blog.sections.map((s) => {
     const tipCode = s.tip
-      ? `,\n  tip: \`${escapeForTemplate(s.tip)}\``
+      ? `,\n    tip: \`${escapeForTemplate(s.tip)}\``
       : "";
-    return `  {\n  heading: \`${escapeForTemplate(s.heading)}\`,\n  body: \`${escapeForTemplate(s.body)}\`${tipCode}\n  }`;
+    const photoCode = s.photo
+      ? `,\n    photo: "${s.photo}"`
+      : "";
+    return `  {\n    heading: \`${escapeForTemplate(s.heading)}\`,\n    body: \`${escapeForTemplate(s.body)}\`${tipCode}${photoCode}\n  }`;
   }).join(",\n");
 
   return `import type { Metadata } from "next";
@@ -170,10 +174,23 @@ export default function BlogPost() {
 
           {/* Sections */}
           {sections.map((section, i) => (
-            <section key={i} className="mb-12">
-              <h2 className="font-[family-name:var(--font-heading)] text-2xl md:text-3xl font-normal text-[#2C2825] mb-4">
+            <section key={i} className="mb-14">
+              <h2 className="font-[family-name:var(--font-heading)] text-2xl md:text-3xl font-normal text-[#2C2825] mb-5">
                 {section.heading}
               </h2>
+
+              {"photo" in section && section.photo && (
+                <div className="w-full aspect-[16/9] relative overflow-hidden mb-6">
+                  <Image
+                    src={section.photo as string}
+                    alt={section.heading}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 720px"
+                  />
+                </div>
+              )}
+
               <p className="font-[family-name:var(--font-body)] text-[#6B6560] text-base leading-[1.9] mb-4">
                 {section.body}
               </p>
@@ -291,7 +308,8 @@ Return ONLY a valid JSON object (no markdown code fences, no explanation):
     {
       "heading": "Conversational section heading (can be fun, not stuffy)",
       "body": "200-300 words. Specific SF Bay Area details, real neighborhood names, what it actually feels like. Personal, direct, warm.",
-      "tip": "Optional: an honest tip, local secret, or straight-talk insight in 1-2 sentences"
+      "tip": "Optional: an honest tip, local secret, or straight-talk insight in 1-2 sentences",
+      "photoQuery": "3-5 word Pexels search query specifically matching what THIS section is about (e.g. 'Pacific Heights Victorian homes' or 'open house staging living room')"
     }
   ],
   "conclusion": "100-150 word closing that feels personal — remind them Jacky is here to help, but make it genuine not salesy",
@@ -300,6 +318,7 @@ Return ONLY a valid JSON object (no markdown code fences, no explanation):
 
 Requirements:
 - Write 5-6 sections
+- Each section MUST have a photoQuery that matches the specific content of that section — not a generic query
 - Mention specific places: Pacific Heights, Atherton, Hillsborough, Palo Alto, Tiburon, Noe Valley, Daly City, Mission District — whichever fit naturally
 - Include real talk about market conditions, prices, or what buyers/sellers actually experience
 - Category must be one of: Market Insights, Buying Guide, Selling Guide, Lifestyle, Neighborhood
@@ -315,24 +334,38 @@ Requirements:
     // Ensure slug is clean
     blog.slug = slugify(blog.slug || blog.title);
 
-    // ── Step 2: Fetch hero photo from Pexels ─────────────────────────────────
     const pexelsKey = process.env.PEXELS_API_KEY;
+    const hasPexels = pexelsKey && pexelsKey !== "your-pexels-api-key-here";
+
+    // ── Step 2: Fetch hero photo from Pexels ─────────────────────────────────
     let heroImage = "/images/golf-harding-park.webp"; // fallback
 
-    if (pexelsKey && pexelsKey !== "your-pexels-api-key-here") {
-      const photoUrl = await fetchPexelsPhoto(blog.photoQuery || "san francisco luxury real estate", pexelsKey);
-      if (photoUrl) {
-        heroImage = await downloadPhoto(photoUrl, blog.slug);
+    if (hasPexels) {
+      const heroUrl = await fetchPexelsPhoto(blog.photoQuery || "san francisco luxury real estate", pexelsKey!);
+      if (heroUrl) {
+        heroImage = await downloadPhoto(heroUrl, `${blog.slug}-hero.jpg`);
       }
     }
 
-    // ── Step 3: Write the Next.js page file ───────────────────────────────────
+    // ── Step 3: Fetch per-section photos from Pexels ─────────────────────────
+    if (hasPexels) {
+      const photoPromises = blog.sections.map(async (section, i) => {
+        if (!section.photoQuery) return;
+        const url = await fetchPexelsPhoto(section.photoQuery, pexelsKey!);
+        if (url) {
+          section.photo = await downloadPhoto(url, `${blog.slug}-section-${i}.jpg`);
+        }
+      });
+      await Promise.all(photoPromises);
+    }
+
+    // ── Step 4: Write the Next.js page file ───────────────────────────────────
     const blogDir = path.join(CWD, "src", "app", "(site)", "blog", blog.slug);
     await fs.mkdir(blogDir, { recursive: true });
     const pageContent = generatePageFile(blog, heroImage);
     await fs.writeFile(path.join(blogDir, "page.tsx"), pageContent, "utf-8");
 
-    // ── Step 4: Update blog-posts.json ────────────────────────────────────────
+    // ── Step 5: Update blog-posts.json ────────────────────────────────────────
     const dataPath = path.join(CWD, "src", "data", "blog-posts.json");
     const existingRaw = await fs.readFile(dataPath, "utf-8");
     const existing = JSON.parse(existingRaw);
@@ -355,7 +388,7 @@ Requirements:
     existing.unshift(newPost); // Add to top of list
     await fs.writeFile(dataPath, JSON.stringify(existing, null, 2), "utf-8");
 
-    // ── Step 5: Git commit and push ───────────────────────────────────────────
+    // ── Step 6: Git commit and push ───────────────────────────────────────────
     try {
       await execAsync(`git add -A`, { cwd: CWD });
       await execAsync(
