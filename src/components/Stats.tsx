@@ -76,14 +76,19 @@ export default function Stats() {
       <div className="max-w-6xl mx-auto relative z-10">
 
         {/* Section label */}
-        <motion.p
+        <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center font-[family-name:var(--font-body)] text-[10px] tracking-[0.35em] uppercase text-[#B8956A] mb-16 font-light"
+          className="text-center mb-16"
         >
-          By the Numbers
-        </motion.p>
+          <p className="font-[family-name:var(--font-body)] text-[10px] tracking-[0.35em] uppercase text-[#B8956A] font-light mb-2">
+            Kinetic Real Estate Team
+          </p>
+          <p className="font-[family-name:var(--font-heading)] text-2xl md:text-3xl font-light text-[#F5F0EB]/80">
+            By the Numbers
+          </p>
+        </motion.div>
 
         {/* Stats grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-0">
