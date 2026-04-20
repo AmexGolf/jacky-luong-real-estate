@@ -17,20 +17,20 @@ export async function GET() {
       messages: [
         {
           role: "user",
-          content: `You are a content strategist for Jacky Luong, a luxury real estate agent in the San Francisco Bay Area (Kinetic Real Estate).
+          content: `You are helping Jacky Luong, a real estate agent in the San Francisco Bay Area who writes in a casual, friendly, mayor-of-the-neighborhood voice. He's warm, funny, direct, and knows SF inside out.
 
-Today is ${today}. Generate 6 compelling, timely blog post ideas for a luxury Bay Area real estate audience.
+Today is ${today}. Suggest 6 blog post ideas that Jacky could write about. Topics should feel like things a well-connected local would want to share — not dry market reports.
 
-Topics should cover a mix of:
-- Current SF Bay Area housing market trends
-- Specific neighborhoods: Pacific Heights, Atherton, Hillsborough, Palo Alto, Tiburon, Noe Valley
-- Luxury lifestyle content (golf, dining, schools, commute, tech hub proximity)
-- Buyer or seller guides for the SF/Silicon Valley market
-- Investment and market timing insights
+Mix of:
+- SF Bay Area housing market (real talk, not jargon)
+- Specific neighborhoods: Pacific Heights, Atherton, Hillsborough, Palo Alto, Tiburon, Noe Valley, Daly City
+- Lifestyle (golf, restaurants, schools, hidden gems, weekend spots)
+- Practical buyer/seller tips told like insider advice from a friend
+- Seasonal or timely angles
 
 Return ONLY a valid JSON array (no markdown, no explanation):
 [
-  { "title": "...", "description": "One sentence pitch.", "category": "Market Insights | Buying Guide | Selling Guide | Lifestyle | Neighborhood" },
+  { "title": "Conversational, punchy title", "description": "One engaging sentence about what this post covers.", "category": "Market Insights | Buying Guide | Selling Guide | Lifestyle | Neighborhood" },
   ...
 ]`,
         },
