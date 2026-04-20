@@ -937,6 +937,223 @@ function ImagesTab({ onToast }: { onToast: (m: string, t: "success" | "error") =
   );
 }
 
+// ─── Auto Blog Tab ────────────────────────────────────────────────────────────
+interface TopicSuggestion { title: string; description: string; category: string; }
+
+function AutoBlogTab({ onToast }: { onToast: (m: string, t: "success" | "error") => void }) {
+  const [topic, setTopic] = useState("");
+  const [suggestions, setSuggestions] = useState<TopicSuggestion[]>([]);
+  const [loadingSuggestions, setLoadingSuggestions] = useState(false);
+  const [generating, setGenerating] = useState(false);
+  const [step, setStep] = useState("");
+  const [result, setResult] = useState<{ title: string; url: string } | null>(null);
+
+  async function handleSuggest() {
+    setLoadingSuggestions(true);
+    setSuggestions([]);
+    try {
+      const res = await fetch("/api/admin/blog-topics");
+      if (res.ok) {
+        setSuggestions(await res.json());
+      } else {
+        const d = await res.json();
+        onToast(d.error || "Failed to fetch topics.", "error");
+      }
+    } catch {
+      onToast("Could not reach the server.", "error");
+    }
+    setLoadingSuggestions(false);
+  }
+
+  async function handleGenerate() {
+    if (!topic.trim()) { onToast("Please enter a topic first.", "error"); return; }
+    setGenerating(true);
+    setResult(null);
+    setStep("✦ Researching topic with Claude AI...");
+    try {
+      setTimeout(() => setStep("✦ Writing article sections..."), 4000);
+      setTimeout(() => setStep("✦ Sourcing hero photo from Pexels..."), 10000);
+      setTimeout(() => setStep("✦ Building blog page..."), 16000);
+      setTimeout(() => setStep("✦ Publishing to GitHub..."), 22000);
+
+      const res = await fetch("/api/admin/generate-blog", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ topic }),
+      });
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        setResult({ title: data.title, url: data.url });
+        setStep("");
+        onToast("Blog post published!", "success");
+      } else {
+        setStep("");
+        onToast(data.error || "Generation failed.", "error");
+      }
+    } catch {
+      setStep("");
+      onToast("Something went wrong. Check your API keys.", "error");
+    }
+    setGenerating(false);
+  }
+
+  const categoryColors: Record<string, string> = {
+    "Market Insights": "#B8956A",
+    "Buying Guide": "#4F8A5F",
+    "Selling Guide": "#5A7AA0",
+    "Lifestyle": "#8B6F47",
+    "Neighborhood": "#6B5EA0",
+  };
+
+  return (
+    <div>
+      <SectionHeader
+        title="Auto Blog"
+        description="AI-powered blog generator — pick a topic, get a fully written, SEO-optimized post published instantly."
+      />
+
+      {/* API Key Status */}
+      <div className="mb-8 p-4 border" style={{ borderColor: "#E8E0D8", background: "#FAF7F3" }}>
+        <p className="font-[family-name:var(--font-body)] text-[10px] tracking-[0.2em] uppercase mb-3" style={{ color: "#B8956A" }}>
+          Required API Keys
+        </p>
+        <div className="space-y-1.5">
+          {[
+            { label: "Anthropic API Key (Claude AI)", env: "ANTHROPIC_API_KEY" },
+            { label: "Pexels API Key (Photos)", env: "PEXELS_API_KEY" },
+          ].map((k) => (
+            <p key={k.env} className="font-[family-name:var(--font-body)] text-xs" style={{ color: "#6B6560" }}>
+              <span style={{ color: "#2C2825" }}>{k.label}</span>
+              {" — add "}
+              <code className="text-[11px] px-1 py-0.5" style={{ background: "#E8E0D8", color: "#2C2825" }}>
+                {k.env}
+              </code>
+              {" to your .env.local file"}
+            </p>
+          ))}
+        </div>
+      </div>
+
+      {/* Topic Input */}
+      <div className="mb-6">
+        <Field label="Blog Topic or Idea">
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={topic}
+              onChange={(e) => setTopic(e.target.value)}
+              onKeyDown={(e) => { if (e.key === "Enter" && !generating) handleGenerate(); }}
+              placeholder="e.g. Why Pacific Heights is the best neighborhood to buy in 2026"
+              className={inputCls}
+              style={inputStyle}
+              onFocus={(e) => (e.target.style.borderColor = "#B8956A")}
+              onBlur={(e) => (e.target.style.borderColor = "#E8E0D8")}
+            />
+          </div>
+        </Field>
+      </div>
+
+      {/* Action Buttons */}
+      <div className="flex gap-3 mb-8">
+        <button
+          onClick={handleGenerate}
+          disabled={generating || !topic.trim()}
+          className="px-8 py-3 font-[family-name:var(--font-body)] text-[11px] tracking-[0.2em] uppercase font-medium transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
+          style={{ background: generating ? "#6B6560" : "#2C2825", color: "#F5F0EB" }}
+          onMouseEnter={(e) => { if (!generating && topic.trim()) (e.currentTarget.style.background = "#B8956A"); }}
+          onMouseLeave={(e) => { if (!generating) (e.currentTarget.style.background = "#2C2825"); }}
+        >
+          {generating ? "Generating..." : "✦ Generate & Publish"}
+        </button>
+
+        <button
+          onClick={handleSuggest}
+          disabled={loadingSuggestions || generating}
+          className="px-6 py-3 font-[family-name:var(--font-body)] text-[11px] tracking-[0.2em] uppercase font-medium transition-all duration-200 disabled:opacity-40 border"
+          style={{ borderColor: "#B8956A", color: "#B8956A", background: "transparent" }}
+          onMouseEnter={(e) => { if (!loadingSuggestions) { e.currentTarget.style.background = "#B8956A"; e.currentTarget.style.color = "#FFFCF8"; } }}
+          onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#B8956A"; }}
+        >
+          {loadingSuggestions ? "Loading..." : "⟳ Suggest Topics"}
+        </button>
+      </div>
+
+      {/* Progress indicator */}
+      {generating && step && (
+        <div className="mb-8 px-5 py-4 border-l-2" style={{ borderColor: "#B8956A", background: "#FAF7F3" }}>
+          <p className="font-[family-name:var(--font-body)] text-sm" style={{ color: "#2C2825" }}>
+            {step}
+          </p>
+          <div className="mt-3 h-1 rounded-full overflow-hidden" style={{ background: "#E8E0D8" }}>
+            <div
+              className="h-full rounded-full transition-all duration-1000"
+              style={{ background: "#B8956A", width: "60%", animation: "pulse 2s infinite" }}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Success result */}
+      {result && (
+        <div className="mb-8 p-5 border" style={{ borderColor: "#22C55E", background: "#F0FDF4" }}>
+          <p className="font-[family-name:var(--font-body)] text-xs tracking-widest uppercase mb-2" style={{ color: "#15803D" }}>
+            ✓ Blog Post Published!
+          </p>
+          <p className="font-[family-name:var(--font-heading)] text-lg mb-3" style={{ color: "#2C2825" }}>
+            {result.title}
+          </p>
+          <a
+            href={result.url}
+            target="_blank"
+            className="font-[family-name:var(--font-body)] text-sm underline"
+            style={{ color: "#B8956A" }}
+          >
+            View Post →
+          </a>
+        </div>
+      )}
+
+      {/* Topic Suggestions */}
+      {suggestions.length > 0 && (
+        <div>
+          <p className="font-[family-name:var(--font-body)] text-[10px] tracking-[0.25em] uppercase mb-4" style={{ color: "#B8956A" }}>
+            AI Topic Suggestions — Click to Use
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {suggestions.map((s, i) => (
+              <button
+                key={i}
+                onClick={() => setTopic(s.title)}
+                className="text-left p-4 border transition-all duration-150 hover:-translate-y-0.5"
+                style={{ borderColor: "#E8E0D8", background: "#FFFCF8" }}
+                onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#B8956A"; e.currentTarget.style.background = "#FAF7F3"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.borderColor = "#E8E0D8"; e.currentTarget.style.background = "#FFFCF8"; }}
+              >
+                <span
+                  className="inline-block font-[family-name:var(--font-body)] text-[9px] tracking-[0.2em] uppercase px-2 py-0.5 mb-2"
+                  style={{
+                    background: `${categoryColors[s.category] || "#B8956A"}22`,
+                    color: categoryColors[s.category] || "#B8956A",
+                  }}
+                >
+                  {s.category}
+                </span>
+                <p className="font-[family-name:var(--font-heading)] text-base mb-1" style={{ color: "#2C2825" }}>
+                  {s.title}
+                </p>
+                <p className="font-[family-name:var(--font-body)] text-xs leading-relaxed" style={{ color: "#6B6560" }}>
+                  {s.description}
+                </p>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ─── Nav items ────────────────────────────────────────────────────────────────
 const NAV_ITEMS = [
   { id: "site", label: "Site Settings", icon: "⚙" },
@@ -945,6 +1162,7 @@ const NAV_ITEMS = [
   { id: "testimonials", label: "Testimonials", icon: "★" },
   { id: "about", label: "About", icon: "◉" },
   { id: "blog", label: "Blog Posts", icon: "✍" },
+  { id: "autoblog", label: "Auto Blog", icon: "✨" },
   { id: "images", label: "Images", icon: "⬜" },
 ];
 
@@ -1089,6 +1307,7 @@ export default function AdminDashboard() {
           {activeTab === "testimonials" && <TestimonialsTab onToast={showToast} />}
           {activeTab === "about" && <AboutTab onToast={showToast} />}
           {activeTab === "blog" && <BlogTab onToast={showToast} />}
+          {activeTab === "autoblog" && <AutoBlogTab onToast={showToast} />}
           {activeTab === "images" && <ImagesTab onToast={showToast} />}
         </div>
       </main>
