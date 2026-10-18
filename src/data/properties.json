@@ -33,7 +33,7 @@
     "status": "sold",
     "statusLabel": "Sold",
     "image": "/images/401.webp",
-    "imageAlt": "Stunning corner unit condo in Hayes Valley. "
+    "imageAlt": ""
   },
   {
     "id": "thcut6j",
@@ -42,6 +42,6 @@
     "status": "sold",
     "statusLabel": "Sold",
     "image": "/images/HOme.jpeg",
-    "imageAlt": "$50k Under asking price. "
+    "imageAlt": ""
   }
 ]
