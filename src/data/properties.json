@@ -21,9 +21,27 @@
     "id": "3",
     "price": "$422,000",
     "location": "San Francisco",
-    "status": "in-contract",
-    "statusLabel": "In Contract",
+    "status": "sold",
+    "statusLabel": "Sold",
     "image": "/images/Property3.jpg",
     "imageAlt": "Property in contract in San Francisco at $422,000"
+  },
+  {
+    "id": "fcrcjit",
+    "price": "$939,000",
+    "location": "Hayes Valley, San Francisco ",
+    "status": "sold",
+    "statusLabel": "Sold",
+    "image": "/images/401.webp",
+    "imageAlt": "Stunning corner unit condo in Hayes Valley. "
+  },
+  {
+    "id": "thcut6j",
+    "price": "$1,838,000",
+    "location": "Central Richmond, San Francisco ",
+    "status": "sold",
+    "statusLabel": "Sold",
+    "image": "/images/HOme.jpeg",
+    "imageAlt": "$50k Under asking price. "
   }
 ]
